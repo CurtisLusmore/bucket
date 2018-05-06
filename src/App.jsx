@@ -83,6 +83,15 @@ class App extends Component {
         });
     }
 
+    uploadFile(ev) {
+        const reader = new FileReader();
+        reader.readAsText(ev.target.files[0], 'UTF-8');
+        reader.onload = ev => {
+            const state = JSON.parse(ev.target.result);
+            this.updateAndSaveState(_ => state);
+        }
+    }
+
     render() {
         const { buckets } = this.state;
         const bucketNames = buckets.map(bucket => bucket.name);
@@ -101,7 +110,9 @@ class App extends Component {
                             {...bucket} />
                     )
                 }
-                <a href={`#${data}`}>Sync</a>
+                <a href={`#${data}`}>Sync</a> |
+                <a href={`data:application/octet-stream;charset=utf-16le;base64,${data}`} download="buckets.json">Download</a> |
+                Upload: <input type="file" accept=".json" onChange={this.uploadFile.bind(this)} />
             </div>
         );
     }
