@@ -3,7 +3,7 @@ import Item from './Item';
 import './Bucket.css';
 
 
-function Bucket({ name, items, buckets, moveItem, removeItem }) {
+function Bucket({ name, curBucketIndex, items, buckets, moveItem, removeItem }) {
     return (
         <table className="Bucket">
             <thead>
@@ -12,11 +12,12 @@ function Bucket({ name, items, buckets, moveItem, removeItem }) {
             <tbody>
                 {
                     items.length === 0
-                        ? <tr><td className="Empty" colspan="2">Empty</td></tr>
+                        ? <tr><td className="Empty" colSpan="2">Empty</td></tr>
                         : items.map((item, index) =>
                             <Item
                                 key={item.id}
                                 buckets={buckets}
+                                curBucketIndex={curBucketIndex}
                                 moveItem={nBI => moveItem(index, nBI)}
                                 removeItem={() => removeItem(index)}
                                 {...item}/>

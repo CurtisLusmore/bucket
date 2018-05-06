@@ -2,7 +2,7 @@ import React from 'react';
 import './Item.css';
 
 
-function Item({ text, buckets, moveItem, removeItem }) {
+function Item({ text, curBucketIndex, buckets, moveItem, removeItem }) {
     function action(index) {
         switch (index) {
             case '-2': break;
@@ -19,7 +19,9 @@ function Item({ text, buckets, moveItem, removeItem }) {
                     <option key={-1} value="-1">Delete</option>
                     {
                         buckets.map((bucket, index) =>
-                            <option key={index} value={index}>{bucket}</option>
+                            index === curBucketIndex
+                                ? null
+                                : <option key={index} value={index}>{bucket}</option>
                         )
                     }
                 </select>

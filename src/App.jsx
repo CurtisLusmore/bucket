@@ -94,6 +94,7 @@ class App extends Component {
                     buckets.map((bucket, index) =>
                         <Bucket
                             key={index}
+                            curBucketIndex={index}
                             buckets={bucketNames}
                             moveItem={(cII, nBI) => this.moveItem(index, cII, nBI)}
                             removeItem={cII => this.removeItem(index, cII)}
