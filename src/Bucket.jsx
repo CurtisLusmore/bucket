@@ -11,14 +11,16 @@ function Bucket({ name, items, buckets, moveItem, removeItem }) {
             </thead>
             <tbody>
                 {
-                    items.map((item, index) =>
-                        <Item
-                            key={item.id}
-                            buckets={buckets}
-                            moveItem={nBI => moveItem(index, nBI)}
-                            removeItem={() => removeItem(index)}
-                            {...item}/>
-                    )
+                    items.length === 0
+                        ? <tr><td className="Empty" colspan="2">Empty</td></tr>
+                        : items.map((item, index) =>
+                            <Item
+                                key={item.id}
+                                buckets={buckets}
+                                moveItem={nBI => moveItem(index, nBI)}
+                                removeItem={() => removeItem(index)}
+                                {...item}/>
+                        )
                 }
             </tbody>
         </table>
