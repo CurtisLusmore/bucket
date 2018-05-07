@@ -50,15 +50,24 @@ class App extends Component {
         );
     }
 
-    addItem(item) {
+    addItem(text) {
         this.updateAndSaveState(
-            ({ nextId, buckets: [{ items, ...bucket }, ...rest] }) => ({
-                nextId: nextId+1,
-                buckets: [
-                    { items: [{ text: item, id: nextId }, ...items], ...bucket },
-                    ...rest
-                ]
-            })
+            ({ nextId, buckets: [{ items, ...bucket }, ...rest] }) => {
+                const timestamp = new Date();
+                const item = {
+                    id: nextId,
+                    text,
+                    created: timestamp,
+                    updated: timestamp
+                };
+                return {
+                    nextId: nextId+1,
+                    buckets: [
+                        { items: [item, ...items], ...bucket },
+                        ...rest
+                    ]
+                };
+            }
         );
     }
 
@@ -67,6 +76,8 @@ class App extends Component {
             const { items: [...curItems], ...curBucket } = buckets[curBucketIndex];
             const [item] = curItems.splice(curItemIndex, 1);
             const { items: [...newItems], ...newBucket } = buckets[newBucketIndex];
+            const timestamp = new Date();
+            item.updated = timestamp;
             newItems.unshift(item);
             buckets[curBucketIndex] = { items: curItems, ...curBucket };
             buckets[newBucketIndex] = { items: newItems, ...newBucket };
@@ -89,7 +100,7 @@ class App extends Component {
         reader.onload = ev => {
             const state = JSON.parse(ev.target.result);
             this.updateAndSaveState(_ => state);
-        }
+        };
     }
 
     render() {
