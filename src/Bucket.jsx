@@ -1,5 +1,6 @@
 import React from 'react';
 import Item from './Item';
+import ItemActions from './ItemActions';
 import './Bucket.css';
 
 
@@ -13,15 +14,18 @@ function Bucket({ name, curBucketIndex, items, buckets, moveItem, removeItem }) 
                 {
                     items.length === 0
                         ? <tr><td className="Empty" colSpan="2">Empty</td></tr>
-                        : items.map((item, index) =>
-                            <Item
-                                key={item.id}
+                        : items.map((item, index) => {
+                            const actions = <ItemActions
+                                key={'actions-' + item.id}
                                 buckets={buckets}
                                 curBucketIndex={curBucketIndex}
                                 moveItem={nBI => moveItem(index, nBI)}
-                                removeItem={() => removeItem(index)}
-                                {...item}/>
-                        )
+                                removeItem={() => removeItem(index)}/>;
+                            return <Item
+                                key={'item-' + item.id}
+                                actions={actions}
+                                {...item}/>;
+                        })
                 }
             </tbody>
         </table>
