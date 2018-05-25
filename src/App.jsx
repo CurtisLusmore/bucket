@@ -21,14 +21,14 @@ class App extends Component {
         const state = stateJson !== null
             ? JSON.parse(stateJson)
             : {
-                nextId: 0,
+                nextId: 4,
                 buckets: [
-                    { name: 'Inbox', items: [] },
-                    { name: 'Today', items: [] },
-                    { name: 'This Week', items: [] },
+                    { name: 'Inbox', items: [{ id: 0, text: 'New tasks go here' }] },
+                    { name: 'Today', items: [{ id: 1, text: 'Move me to Done through the dropdown' }] },
+                    { name: 'This Week', items: [{ id: 2, text: 'Each day, move some items from here to Today' }] },
                     { name: 'This Month', items: [] },
                     { name: 'This Year', items: [] },
-                    { name: 'Some Day', items: [] },
+                    { name: 'Some Day', items: [{ id: 3, text: 'You can delete me' }] },
                     { name: 'Done', items: [] }
                 ]
             };
@@ -121,9 +121,14 @@ class App extends Component {
                             {...bucket} />
                     )
                 }
-                <a href={`#${data}`}>Sync</a> |
-                <a href={`data:application/octet-stream;charset=utf-16le;base64,${data}`} download="buckets.json">Download</a> |
-                Upload: <input type="file" accept=".json" onChange={this.uploadFile.bind(this)} />
+                <p>
+                    <a href={`#${data}`}>Sync</a> |
+                    <a href={`data:application/octet-stream;charset=utf-16le;base64,${data}`} download="buckets.json">Download</a> |
+                    Upload: <input type="file" accept=".json" onChange={this.uploadFile.bind(this)} />
+                </p>
+                <p>
+                    <a href="https://github.com/curtislusmore/bucket">GitHub</a>
+                </p>
             </div>
         );
     }
